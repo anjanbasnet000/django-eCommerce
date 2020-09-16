@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: python /mycloset/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/mycloset
+    ports:
+       - 8000:8000
+    depends_on:
+      - db
+  db:
+    image: postgres:12
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+ 
+    environment:
+        POSTGRES_HOST_AUTH_METHOD: "trust"
+  smtp:
+    image: namshi/smtp
+    container_name: smtp_relay1
+    restart: always
+    ports:
+     - "465:465"
+    
+
+volumes: 
+  postgres_data:
+
+
+
+
+    
